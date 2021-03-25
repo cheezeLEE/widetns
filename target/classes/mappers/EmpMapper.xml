@@ -6,7 +6,6 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 	<mapper namespace="EmpMapper">
-	<!-- DAO의 메서드가 될 것이다. -->
 	
 	<!-- 현재 시간 조회 -->
 	<select id="getTime" resultType="String"> 
@@ -14,13 +13,14 @@
 	</select>
 	
 	<!-- 데이터 삽입 -->
-	<insert id = "insertMember">
-		INSERT INTO 
+	<insert id = "insertEmp">
+		INSERT INTO employee(kor_name, eng_name, addr1, addr2, addr3, pos, dept, career, emp_level, join_date, cert, photo, reg_writer) 
+		VALUES(#{kor_name}, #{eng_name}, #{addr1}, #{addr2}, #{addr3}, #{pos}, #{dept}, #{career}, #{emp_level}, #{join_date}, #{cert}, #{photo}, #{reg_writer})
 	</insert>
 	
 	<!--데이터 조회 -->
-	<select id="selectMember" resultType="com.widetns.projmp.dao.EmployeeVO">
-
+	<select id="selectEmp" resultType="com.widetns.projmp.dao.EmployeeVO">
+		SELECT * FROM employee WHERE emp_num = #{emp_num}
 	</select>
 	
 </mapper>
