@@ -1,32 +1,31 @@
 package com.widetns.projmp.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.widetns.projmp.domain.EmployeeVO;
+import com.widetns.projmp.domain.ProjectBasicVO;
 
 @Repository
 public class ProjmpDAOImpl implements ProjmpDAO {
 
 	@Autowired
 	private SqlSession sqlSession;
-	
-	private static final String GetTime = "EmpMapper.getTime";
-	private static final String InsertEmp = "EmpMapper.insertEmp";
-	private static final String SelectEmp = "EmpMapper.selectEmp";
+
+	private static final String SelectEmp = "ProjmpMapper.selectEmp";
+	private static final String SelectProj = "ProjmpMapper.projList";
 	
 	@Override
-	public String getTime() {
-		return sqlSession.selectOne(GetTime);
+	public EmployeeVO selectEmp(String kor_name) {
+		return sqlSession.selectOne(SelectEmp, kor_name);
 	}
 
 	@Override
-	public void insertEmp(EmployeeVO vo) {
-		sqlSession.insert(InsertEmp, vo);
-	}
-
-	@Override
-	public EmployeeVO selectEmp(int emp_num) {
-		return sqlSession.selectOne(SelectEmp, emp_num);
+	public List<ProjectBasicVO> projList() {
+		return sqlSession.selectList(SelectProj);
 	}
 
 }

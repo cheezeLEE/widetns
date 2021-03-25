@@ -1,4 +1,4 @@
-package com.widetns.projmp.dao;
+package com.widetns.projmp.domain;
 
 import java.util.Date;
 import java.util.List;
@@ -15,5 +15,5 @@ public class EmployeeVO {
 	private String reg_writer, mod_writer;
 	private char deleted_yn;
 	
-//	private EmployeeTechVO techList;
+	private List<EmployeeTechVO> techList;
 }

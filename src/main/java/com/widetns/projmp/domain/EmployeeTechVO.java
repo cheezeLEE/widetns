@@ -1,4 +1,4 @@
-package com.widetns.projmp.dao;
+package com.widetns.projmp.domain;
 
 import java.util.Date;
 
