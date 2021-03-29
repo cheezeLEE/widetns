@@ -1,77 +1,41 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- DTD 선언 -->
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="ProjmpMapper">			
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="ProjmpMapper">
+			
+	<!-- 사원 데이터 조회 -->
 	<select id="selectEmp" resultType="com.widetns.projmp.domain.EmployeeVO">
 		SELECT * FROM employee WHERE kor_name = #{kor_name}
 	</select>
-
- 	<select id="projList" resultType="com.widetns.projmp.domain.TestVO">
-		SELECT DISTINCT pb.prj_name, pb.pm_name, pb.prj_start, pb.prj_end
-		FROM project_mapping pm
-			JOIN project_basic pb ON pm.prj_num = pb.prj_num
+	
+	<!-- 프로젝트 목록 조회 -->
+	<select id="projList" resultType="com.widetns.projmp.domain.TestVO">
+		SELECT pb.prj_name, pb.pm_name, pb.prj_start, pb.prj_end 
+		FROM project_mapping pm 
+			JOIN project_basic pb ON pb.prj_num = pm.prj_num
 			JOIN employee e ON pm.emp_num = e.emp_num
-		WHERE pb.deleted_yn = 'n'
-			AND e.kor_name LIKE '%'||#{kor_name}||'%'
-
+		WHERE pb.deleted_yn = 'n' 
+			AND prj_name LIKE '%'||#{prj_name}||'%' 
+			AND kor_name LIKE '%'||#{kor_name}||'%'
+			AND IFNULL(#{prj_start} ,prj_start=#{prj_start}, true) 
+			AND IFNULL(#{prj_end} ,prj_end=#{prj_end}, true) 
+		GROUP BY pb.prj_name;
 	</select>
 	
-	<!-- 삽질의 흔적... -->
-<!--  	<select id="projList" resultType="com.widetns.projmp.domain.ProjectBasicVO">
-		SELECT DISTINCT pb.prj_name, pb.pm_name, pb.prj_start, pb.prj_end
-		FROM project_mapping pm
-			JOIN project_basic pb ON pm.prj_num = pb.prj_num
-			JOIN employee e ON pm.emp_num = e.emp_num
-		WHERE pb.deleted_yn = 'n'
-	</select> -->
-	
-<!-- 	<resultMap type="com.widetns.projmp.domain.ProjectBasicVO" id="projb">
-		<id property="prj_num" column="prj_num"/>
-		<result property="prj_name" column="prj_name"/>
-		<result property="pm_name" column="pm_name"/>
-		<result property="prj_start" column="prj_start"/>
-		<result property="prj_end" column="prj_end"/>
+<!-- 	<resultMap type="ProjectMappingVO" id="searchPrj">
+		<result column="prj_name" property="prjName" />
+		<result column="pm_name" property="pmName" />
+		<result column="prj_start" property="prjStart" />
+		<result column="prj_end" property="prjEnd" />		
 	</resultMap>
 	
-	<resultMap type="com.widetns.projmp.domain.EmployeeVO" id="emp">
-		<id property="emp_num" column="emp_num" />
-		<result property="kor_name" column="kor_name"/>
-	</resultMap>
-	
-	<resultMap type="com.widetns.projmp.domain.ProjectMappingVO" id="ProjectMappingVO">
-		<result property="prj_num" column="prj_num"/>
-		<result property="emp_num" column="emp_num"/>
-		<result property="start_date" column="start_date"/>
-		<result property="end_date" column="end_date"/>
-		<result property="role" column="role"/>
-		<result property="task" column="task"/>
-		<result property="reg_date" column="reg_date"/>
-		<result property="reg_writer" column="reg_writer"/>
-		<result property="mod_date" column="mod_date"/>
-		<result property="mod_writer" column="mod_writer"/>
-		<result property="deleted_yn" column="deleted_yn"/>
-		<collection property="prj_basic" column="prj_num" javaType="java.util.ArrayList" ofType="com.widetns.projmp.domain.ProjectBasicVO" select="projb" />
-		<collection property="employee" column="emp_num" javaType="java.util.ArrayList" ofType="com.widetns.projmp.domain.EmployeeVO" select="emp" />
-	</resultMap>
-	
-	<select id="projb" resultType="com.widetns.projmp.domain.ProjectBasicVO">
-		SELECT prj_num, prj_name, client, prj_start, prj_end, manager, manager_tel, pm_name, etc, end_yn
-		FROM project_basic
-		WHERE deleted_yn = 'n' AND prj_num = 1
-	</select>
-	
-	<select id="emp" resultType="com.widetns.projmp.domain.EmployeeVO">
-		SELECT emp_num, kor_name, eng_name, addr1, addr2, addr3, pos, dept, career, emp_level, join_date, cert, photo
-		FROM employee
-		WHERE deleted_yn = 'n' AND emp_num = 1
-	</select> -->
-	
-<!-- 	<select id="projList" resultMap="ProjectMappingVO">
-		SELECT DISTINCT pb.prj_name, pb.pm_name, pb.prj_start, pb.prj_end
-		FROM project_mapping pm
-			JOIN project_basic pb ON pm.prj_num = pb.prj_num
-			JOIN employee e ON pm.emp_num = e.emp_num
-		WHERE pb.deleted_yn = 'n'
+	<select id="searchProj" resultType="com.widetns.projmp.domain.ProjectMappingVO">
+		SELECT e.emp_name, pb.prj_name, pb.pm_name, pb.prj_start, pb.prn_end 
+		FROM project_basic pb, project_mapping pm, employee e
+		WHERE pb.prj_num = pm.prj_num AND e.emp_num = pm.emp_num AND pb.prj_name LIKE '%'||#{prj_name}||'%'
 	</select> -->
 </mapper>

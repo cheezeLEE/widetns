@@ -11,7 +11,6 @@ import com.widetns.projmp.service.ProjmpService;
 @Controller
 public class ProjmpController {
 	
-
 	@Autowired
 	private ProjmpService service;
 
