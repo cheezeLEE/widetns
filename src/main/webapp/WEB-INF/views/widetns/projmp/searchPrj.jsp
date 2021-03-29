@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -96,7 +98,15 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+		  <c:forEach items="${list}" var="list">
+		  	<tr>
+		  	  <td><input type="radio" name="selBtn" class="selBtn"></td>
+		  	  <td><c:out value="${list.prj_name}" /></td>
+		  	  <td><c:out value="${list.pm_name}" /></td>
+		  	  <td><fmt:formatDate value="${list.prj_start}" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${list.prj_end}" pattern="yyyy-MM-dd"/></td>
+		  	</tr>
+		  </c:forEach>
+<!--           <tr>
             <td><input type="radio" name="selBtn" class="selBtn"></td>
             <td>프로젝트1</td>
             <td>홍길동</td>
@@ -113,7 +123,7 @@
             <td>프로젝트3</td>
             <td>홍길동</td>
             <td>2019.1.2 ~ 2019.6.31</td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
       <div id="btnArea">
@@ -129,10 +139,10 @@
   <script>
     $(document).ready(function () {
       $("#regBtn").on("click", function () {
-        location.href = "writePrj.html";
+        location.href = "/writePrj";
       });
       $("#updateBtn").on("click", function () {
-        location.href = "updatePrj.html";
+        location.href = "/updatePrj";
       });
     });
   </script>

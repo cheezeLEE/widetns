@@ -15,5 +15,5 @@ public class EmployeeVO {
 	private String reg_writer, mod_writer;
 	private char deleted_yn;
 	
-	private List<EmployeeTechVO> techList;
+//	private List<EmployeeTechVO> techList;
 }

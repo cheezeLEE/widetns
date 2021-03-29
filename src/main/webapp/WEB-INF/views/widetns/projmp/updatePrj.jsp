@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,12 +30,14 @@
       font-weight: bold;
     }
 
-    .col-sm-12 {
+    .col-sm-3,
+    .col-sm-9 {
       padding: 0px;
+      margin-top: 20px;
     }
 
-    p {
-      margin-top: 20px;
+    .col-sm-9 {
+      margin-bottom: 10px;
     }
 
     .btnArea {
@@ -80,11 +83,11 @@
   사용 기술 : JAVA, MySQL, Sping, AWS...
   비고 : ...
         </textarea>
-      <div class="btnArea col-sm-12">
+      <div class="col-sm-3"><label>사원정보</label></div>
+      <div class="btnArea col-sm-9">
         <button class="btn btn-primary btn-sm">추가</button>
         <button class="btn btn-danger btn-sm">삭제</button>
       </div>
-      <p><label>사원정보</label></p>
       <table>
         <thead>
           <tr>
@@ -133,20 +136,20 @@
   <script src=" https://code.jquery.com/jquery-1.12.4.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script>
-	  $(document).ready(function () {
-	      $("#regBtn").on("click", function () {
-	        location.href = "/searchPrj"; //데이터를 가지고 페이지이동
-	      });
-	      
-	      $("#cancelBtn").on("click", function () {
-	        location.href = "/searchPrj"; //페이지만 이동
-	      });
-	
-	      $("#addBtn").on("click", function () {
-	        location.href = "/searchEmp"; //페이지만 이동
-	      });
-	
-	    });
+    $(document).ready(function () {
+      $("#regBtn").on("click", function () {
+        location.href = "/searchPrj"; //데이터를 가지고 페이지이동
+      });
+
+      $("#cancelBtn").on("click", function () {
+        location.href = "/searchPrj"; //페이지만 이동
+      });
+
+      $("#addBtn").on("click", function () {
+        location.href = "/searchEmp"; //페이지만 이동
+      });
+
+    });
   </script>
 </body>
 

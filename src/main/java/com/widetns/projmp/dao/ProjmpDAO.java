@@ -3,12 +3,16 @@ package com.widetns.projmp.dao;
 import java.util.List;
 
 import com.widetns.projmp.domain.EmployeeVO;
-import com.widetns.projmp.domain.ProjectBasicVO;
+import com.widetns.projmp.domain.TestVO;
 
 public interface ProjmpDAO {
 	
+	
+	
 	//프로젝트 목록
-	public List<ProjectBasicVO> projList();
+//	public List<ProjectBasicVO> projList();
+//	List<ProjectMappingVO> projList();
+	List<TestVO> projList(TestVO vo);
 	
 	//프로젝트 검색
 	

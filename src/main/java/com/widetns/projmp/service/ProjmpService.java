@@ -1,5 +1,10 @@
 package com.widetns.projmp.service;
 
-public interface ProjmpService {
+import java.util.List;
 
+import com.widetns.projmp.domain.ProjectMappingVO;
+
+public interface ProjmpService {
+//	public List<ProjectBasicVO> projList();
+//	public List<ProjectMappingVO> projList();
 }

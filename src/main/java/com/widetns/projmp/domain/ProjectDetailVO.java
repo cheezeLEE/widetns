@@ -14,5 +14,5 @@ public class ProjectDetailVO {
 	private String reg_writer, mod_writer;
 	private char deleted_yn;
 	
-	private List<CommonCodeVO> commonCode;
+//	private List<CommonCodeVO> commonCode;
 }

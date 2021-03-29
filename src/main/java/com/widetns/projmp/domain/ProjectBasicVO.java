@@ -16,5 +16,5 @@ public class ProjectBasicVO {
 	private String reg_writer, mod_writer;
 	private char deleted_yn;
 	
-	private List<ProjectDetailVO> projDetail;
+//	private List<ProjectDetailVO> projDetail;
 }

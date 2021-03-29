@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.widetns.projmp.domain.EmployeeVO;
-import com.widetns.projmp.domain.ProjectBasicVO;
+import com.widetns.projmp.domain.TestVO;
 
 @Repository
 public class ProjmpDAOImpl implements ProjmpDAO {
@@ -23,9 +23,17 @@ public class ProjmpDAOImpl implements ProjmpDAO {
 		return sqlSession.selectOne(SelectEmp, kor_name);
 	}
 
+//	@Override
+//	public List<ProjectBasicVO> projList() {
+//		return sqlSession.selectList(SelectProj);
+//	}
+//	@Override
+//	public List<ProjectMappingVO> projList() {
+//		return sqlSession.selectList(SelectProj);
+//	}
 	@Override
-	public List<ProjectBasicVO> projList() {
-		return sqlSession.selectList(SelectProj);
+	public List<TestVO> projList(TestVO vo) {
+		return sqlSession.selectList(SelectProj,vo);
 	}
 
 }
