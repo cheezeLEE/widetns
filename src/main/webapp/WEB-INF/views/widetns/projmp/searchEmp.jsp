@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,7 +60,6 @@
   <div class="container">
     <div class="row">
       <h1 id="title">사원 검색</h1>
-
       <div class="col-sm-12">
         <label for="empName">이름</label>
         <input type="text" name="empName" id="empName" required>
@@ -78,26 +79,18 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th>1</th>
-            <th>PM</th>
-            <th>홍길동</th>
-            <th>개발부</th>
-            <th>12년</th>
-            <th>고급</th>
-            <th>2009.2.1</th>
-            <th>정보처리기사</th>
-          </tr>
-          <tr>
-            <th>3</th>
-            <th>PE</th>
-            <th>홍길동</th>
-            <th>관리부</th>
-            <th>3년</th>
-            <th>초급</th>
-            <th>2019.8.30</th>
-            <th>정보처리기사</th>
-          </tr>
+          <c:forEach items="${emp}" var="emp">
+			<tr>
+			  <td><c:out value="${emp.emp_num }" /></td>
+			  <td><c:out value="${emp.pos }" /></td>
+			  <td><c:out value="${emp.kor_name }" /></td>
+			  <td><c:out value="${emp.dept }" /></td>
+			  <td><c:out value="${emp.career }" /></td>
+			  <td><c:out value="${emp.emp_level }" /></td>
+			  <td><fmt:formatDate value="${emp.join_date }" pattern="yyyy-MM-dd"/></td>
+			  <td><c:out value="${emp.cert }" /></td>
+			</tr>          
+          </c:forEach>
         </tbody>
       </table>
     </div>

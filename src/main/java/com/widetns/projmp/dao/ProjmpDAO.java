@@ -1,18 +1,17 @@
 package com.widetns.projmp.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
-import com.widetns.projmp.domain.EmployeeVO;
-import com.widetns.projmp.domain.TestVO;
+import org.springframework.stereotype.Repository;
 
+@Repository("ProjmpDAO")
 public interface ProjmpDAO {
-	
-	
 	
 	//프로젝트 목록
 //	public List<ProjectBasicVO> projList();
 //	List<ProjectMappingVO> projList();
-	List<TestVO> projList(TestVO vo);
+	public List<HashMap<String, Object>> projList();
 	
 	//프로젝트 검색
 	
@@ -24,7 +23,7 @@ public interface ProjmpDAO {
 	
 	
 	//사원검색
-	public EmployeeVO selectEmp(String kor_name);
+	public List<HashMap<String, Object>> empList();
 	
 	//사원추가
 	
@@ -32,6 +31,17 @@ public interface ProjmpDAO {
 	//사원삭제
 	
 	
+	//사원정보 상세보기
+	public HashMap<String, Object> empDetail();
+	
 	//사원정보 수정
+	public void empUpdate(HashMap<String, Object> map);
+	
+	//사원 사진 수정
+	public void insertImg(HashMap<String, Object> img);
+	
+	//사번으로 사원 사진 찾기
+//	public List<HashMap<String, Object>> findImg(int empNo);
+	public HashMap<String, Object> findImg(int empNo);
 	
 }

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 
@@ -75,162 +77,165 @@
   <div class="container">
     <div class="row">
       <h1 id="title">사원정보 수정</h1>
-      <div class="col-sm-3">
-      	<div class="col-sm-12">
-	      <img src="/resources/img/11.png" alt="사진">  	
-      	</div>
-        <button class="btn btn-sm btn-primary">변경</button>
-      </div>
-      <div class="col-sm-9">
-        <table>
-          <tbody>
-            <tr>
-              <td class="col-sm-2">사원번호</td>
-              <td class="col-sm-6">12</td>
-              <td class="col-sm-2">직책</td>
-              <td class="col-sm-2">
-                <select name="position" id="position">
-                  <option value="">---</option>
-                  <option value="사원">사원</option>
-                  <option value="대리">대리</option>
-                  <option value="팀장">팀장</option>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td>한글이름</td>
-              <td>홍길동</td>
-              <td>부서</td>
-              <td>
-              <select name="dept" id="dept">
-              	<option value="">---</option>
-              	<option value="개발부">개발부</option>
-              	<option value="관리부">관리부</option>
-              </select>
-              </td>
-            </tr>
-            <tr>
-              <td>영문이름</td>
-              <td>Hong GilDong</td>
-              <td>경력</td>
-              <td><input type="number" name="career" id="career" min="1" max="50" required>&nbsp;년</td>
-            </tr>
-            <tr>
-              <td>우편번호</td>
-              <td><input type="text" name="addr1" id="addr1" required><button class="btn btn-sm btn-primary">검색</button></td>
-              <td>등급</td>
-              <td>
-                <select name="level" id="level">
-                  <option value="">---</option>
-                  <option value="초급">초급</option>
-                  <option value="중급">중급</option>
-                  <option value="고급">고급</option>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td>도로명주소</td>
-              <td><input type="text" name="addr2" id="addr2" required></td>
-              <td>입사일</td>
-              <td>2017.6.20</td>
-            </tr>
-            <tr>
-              <td>상세주소</td>
-              <td><input type="text" name="addr3" id="addr3" required></td>
-              <td>자격증</td>
-              <td><input type="text" name="cert" id="cert"></td>
-            </tr>
-          </tbody>
-        </table><br>
-        <h4>사용가능기술</h4>
-        <table class="tech">
-          <thead>
-            <tr>
-              <th></th>
-              <th>기술명</th>
-              <th>등급</th>
-            </tr>
-          </thead>
-          <tbody id="tbl_body">
-            <tr>
-              <td><input type="checkbox" class="selBtn" name="chkBtn"></td>
-              <td class="techList">
-                JAVA
-              </td>
-              <td>
-                상
-              </td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" class="selBtn" name="chkBtn"></td>
-              <td class="techList">
-                C
-              </td>
-              <td>
-                중
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <br>
-        <table class="addTech">
-          <thead>
-            <tr>
-              <th>기술명</th>
-              <th>등급</th>
-            </tr>
-          </thead>
-          <tbody class="tbl_body2">
-          </tbody>
-        </table>
-        <div class="btnArea">
-          <button class="btn btn-sm btn-primary" id="addBtn">추가</button>
-          <button class="btn btn-sm btn-danger" id="delBtn">삭제</button>
-        </div>
-        <h4>참여 프로젝트</h4>
-        <table class="prj">
-          <thead>
-            <tr>
-              <th>프로젝트번호</th>
-              <th>프로젝트명</th>
-              <th>PM</th>
-              <th>담당자</th>
-              <th>기간</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>프로젝트1</td>
-              <td>홍길동</td>
-              <td>김가가</td>
-              <td>2021.2.20 ~ 2021.5.31</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>프로젝트2</td>
-              <td>홍길동</td>
-              <td>이나나</td>
-              <td>2020.4.30 ~ 2020.7.25</td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="btnArea">
-          <button class="btn btn-primary" id="regBtn">수정</button>
-          <button class="btn btn-danger" id="cancelBtn">취소</button>
-        </div>
-      </div>
+      <form role='form' action="/updateEmp" method="POST" enctype="multipart/form-data">
+ 	      <div class="col-sm-3">
+	      	<div class="col-sm-12">
+		      <img id="empImg" width="150px" src="/resources/img/${empDetail.photo }" alt="${empDetail.photo }">
+	      	  <input type="file" id="img" name="file" accept="image/*" onchange="readURL(this);" />
+	      	</div>
+<!-- 	        <button class="btn btn-sm btn-primary">변경</button> -->
+	      </div>
+	      <div class="col-sm-9">
+	        <table>
+	          <tbody>
+	            <tr>
+	              <td class="col-sm-2">사원번호</td>
+	              <td class="col-sm-6"><input type="text" name="emp_num" value='<c:out value="${empDetail.emp_num }"/>' readonly></td>
+	              <td class="col-sm-2">직책</td>
+	              <td class="col-sm-2">
+	                <select name="pos" id="position">
+	                  <option value="${empDetail.pos }"><c:out value="${empDetail.pos }"/></option>
+	                  <option value="사원">사원</option>
+	                  <option value="대리">대리</option>
+	                  <option value="팀장">팀장</option>
+	                </select>
+	              </td>
+	            </tr>
+	            <tr>
+	              <td>한글이름</td>
+	              <td><input type="text" name="emp_num" value='<c:out value="${empDetail.kor_name }"/>' readonly></td>
+	              <td>부서</td>
+	              <td>
+	              <select name="dept" id="dept">
+	              	<option value="${empDetail.dept }"><c:out value="${empDetail.dept }"/></option>
+	              	<option value="개발부">개발부</option>
+	              	<option value="관리부">관리부</option>
+	              </select>
+	              </td>
+	            </tr>
+	            <tr>
+	              <td>영문이름</td>
+	              <td><input type="text" name="emp_num" value='<c:out value="${empDetail.eng_name }"/>' readonly></td>
+	              <td>경력</td>
+	              <td><input type="number" name="career" id="career" value='<c:out value="${empDetail.career }"/>' max="50" min="1" required>&nbsp;년</td>
+	            </tr>
+	            <tr>
+	              <td>우편번호</td>
+	              <td><input type="text" name="addr1" id="addr1" value='<c:out value="${empDetail.addr1 }"/>' required><button class="btn btn-sm btn-primary">검색</button></td>
+	              <td>등급</td>
+	              <td>
+	                <select name="emp_level" id="level">
+	                  <option value="${empDetail.emp_level}"><c:out value="${empDetail.emp_level }"/></option>
+	                  <option value="초급">초급</option>
+	                  <option value="중급">중급</option>
+	                  <option value="고급">고급</option>
+	                </select>
+	              </td>
+	            </tr>
+	            <tr>
+	              <td>도로명주소</td>
+	              <td><input type="text" name="addr2" id="addr2" value='<c:out value="${empDetail.addr2 }"/>' required></td>
+	              <td>입사일</td>
+	              <td><input type="text" name="join_date" value='<fmt:formatDate value="${empDetail.join_date }" pattern="yyyy-MM-dd"/>' readonly></td>
+	            </tr>
+	            <tr>
+	              <td>상세주소</td>
+	              <td><input type="text" name="addr3" id="addr3" value='<c:out value="${empDetail.addr3 }"/>' required></td>
+	              <td>자격증</td>
+	              <td><input type="text" name="cert" id="cert" value='<c:out value="${empDetail.cert }"/>'></td>
+	            </tr>
+	          </tbody>
+	        </table><br>
+	        <h4>사용가능기술</h4>
+	        <table class="tech">
+	          <thead>
+	            <tr>
+	              <th></th>
+	              <th>기술명</th>
+	              <th>등급</th>
+	            </tr>
+	          </thead>
+	          <tbody id="tbl_body">
+	            <tr>
+	              <td><input type="checkbox" class="selBtn" name="chkBtn"></td>
+	              <td class="techList">
+	                JAVA
+	              </td>
+	              <td>
+	                상
+	              </td>
+	            </tr>
+	            <tr>
+	              <td><input type="checkbox" class="selBtn" name="chkBtn"></td>
+	              <td class="techList">
+	                C
+	              </td>
+	              <td>
+	                중
+	              </td>
+	            </tr>
+	          </tbody>
+	        </table>
+	        <br>
+	        <table class="addTech">
+	          <thead>
+	            <tr>
+	              <th>기술명</th>
+	              <th>등급</th>
+	            </tr>
+	          </thead>
+	          <tbody class="tbl_body2">
+	          </tbody>
+	        </table>
+	        <div class="btnArea">
+	          <button class="btn btn-sm btn-primary" id="addBtn">추가</button>
+	          <button class="btn btn-sm btn-danger" id="delBtn">삭제</button>
+	        </div>
+	        <h4>참여 프로젝트</h4>
+	        <table class="prj">
+	          <thead>
+	            <tr>
+	              <th>프로젝트번호</th>
+	              <th>프로젝트명</th>
+	              <th>PM</th>
+	              <th>담당자</th>
+	              <th>기간</th>
+	            </tr>
+	          </thead>
+	          <tbody>
+	            <tr>
+	              <td>1</td>
+	              <td>프로젝트1</td>
+	              <td>홍길동</td>
+	              <td>김가가</td>
+	              <td>2021.2.20 ~ 2021.5.31</td>
+	            </tr>
+	            <tr>
+	              <td>2</td>
+	              <td>프로젝트2</td>
+	              <td>홍길동</td>
+	              <td>이나나</td>
+	              <td>2020.4.30 ~ 2020.7.25</td>
+	            </tr>
+	          </tbody>
+	        </table>
+	        <div class="btnArea">
+	          <button class="btn btn-primary" id="regBtn">수정</button>
+	          <button class="btn btn-danger" id="cancelBtn">취소</button>
+	        </div>
+	      </div>
+	    </form> 
     </div>
   </div>
   <script src=" https://code.jquery.com/jquery-1.12.4.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script>
+<script>
     $(document).ready(function () {
 
-      $("#regBtn").on("click",function(){
-    	 location.href="/"; 
+      $("#regBtn").on("click",function(e){
+    	  location.href="/"; 
       });
-
+      
       $("#cancelBtn").on("click",function(){
     	 location.href="/"; 
       });
@@ -361,8 +366,59 @@
           checkTechs.eq(i).closest('tr').remove(); //삭제
         }
       });
+      
+      var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+		var maxSize = 5242880;
+		
+		function checkExtension(fileName, fileSize){
+			if(fileSize >= maxSize){
+				alert("파일 사이즈 초과");
+				return false;
+			}
+			
+			if(regex.test(fileName)){
+				alert("해당 종류의 파일은 업로드할 수 없습니다.");
+				return false;
+			}
+			return true;
+		}
+	
+		
+		$("#regImg").on("click",function(e){
+			var formData = new FormData();
+			var inputFile = $("input[name='file']");
+			var files = inputFile[0].files;
+			
+			for(var i=0; i<files.length; i++){
+				if(!checkExtension(files[i].name, files[i].size)){
+					return false;
+				}
+				
+				formData.append("uploadFile", files[i]);
+			}
+			
+			$.ajax({
+				url: '/uploadAjaxAction',
+				processData: false,
+				contentType: false,
+				data: formData,
+				type: 'POST',
+				dataType: 'json',
+				success: function(result){
+					console.log(result);
+				}
+			});
+		});
     });
   </script>
+  <script>
+    function readURL(input) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        $('#empImg').attr('src', e.target.result);
+      }
+      reader.readAsDataURL(input.files[0]);
+    }
+  </script>
 </body>
-
 </html>

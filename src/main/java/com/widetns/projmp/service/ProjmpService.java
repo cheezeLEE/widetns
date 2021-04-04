@@ -1,10 +1,15 @@
 package com.widetns.projmp.service;
 
+import java.util.HashMap;
 import java.util.List;
 
-import com.widetns.projmp.domain.ProjectMappingVO;
-
 public interface ProjmpService {
-//	public List<ProjectBasicVO> projList();
-//	public List<ProjectMappingVO> projList();
+	// 프로젝트 목록
+	public List<HashMap<String, Object>> projList();
+	// 사원 목록
+	public List<HashMap<String, Object>> empList();
+	// 사원정보 상세보기 (emp_num = 1)
+	public HashMap<String, Object> empDetail();
+	// 사원정보 수정 (emp_num = 1)
+	public void empUpdate(HashMap<String, Object> map);
 }

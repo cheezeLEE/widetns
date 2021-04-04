@@ -73,57 +73,39 @@
   <div class="container">
     <div class="row">
       <h1 id="title">프로젝트 검색</h1>
-
-      <div class="col-sm-12">
-        <label for="prjName">프로젝트명</label>
-        <input type="text" name="prjName" id="prjName" required>
-        <label for="empName">사원명</label>
-        <input type="text" name="empName" id="empName">
-      </div>
-      <div class="col-sm-12">
-        <label for="startDate">프로젝트기간</label>
-        <input type="date" name="startDate" id="startDate">
-        <span>~</span>
-        <input type="date" name="endDate" id="endDate">
-        <button type="button" id="searchBtn" class="btn btn-primary">검색</button>
-
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th>프로젝트명</th>
-            <th>책임자</th>
-            <th>프로젝트기간</th>
-          </tr>
-        </thead>
-        <tbody>
-		  <c:forEach items="${list}" var="list">
-		  	<tr>
-		  	  <td><input type="radio" name="selBtn" class="selBtn"></td>
-		  	  <td><c:out value="${list.prj_name}" /></td>
-		  	  <td><c:out value="${list.pm_name}" /></td>
-		  	  <td><fmt:formatDate value="${list.prj_start}" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${list.prj_end}" pattern="yyyy-MM-dd"/></td>
-		  	</tr>
-		  </c:forEach>
-<!--           <tr>
-            <td><input type="radio" name="selBtn" class="selBtn"></td>
-            <td>프로젝트1</td>
-            <td>홍길동</td>
-            <td>2021.2.20 ~ 2021.5.31</td>
-          </tr>
-          <tr>
-            <td><input type="radio" name="selBtn" class="selBtn"></td>
-            <td>프로젝트2</td>
-            <td>홍길동</td>
-            <td>2020.4.30 ~ 2020.7.25</td>
-          </tr>
-          <tr>
-            <td><input type="radio" name="selBtn" class="selBtn"></td>
-            <td>프로젝트3</td>
-            <td>홍길동</td>
-            <td>2019.1.2 ~ 2019.6.31</td>
-          </tr> -->
+		<form action="/searchPrj" method="GET">
+	      <div class="col-sm-12">
+	        <label for="prj_name">프로젝트명</label>
+	        <input type="text" name="prj_name" id="prjName" required>
+	        <label for="emp_name">사원명</label>
+	        <input type="text" name="emp_name" id="empName">
+	      </div>
+	      <div class="col-sm-12">
+	        <label for="prj_start">프로젝트기간</label>
+	        <input type="date" name="prj_start" id="startDate">
+	        <span>~</span>
+	        <input type="date" name="prj_end" id="endDate">
+	        <input type="submit" id="searchBtn" class="btn btn-primary" value="검색">
+	      </div>		
+		</form>
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>프로젝트명</th>
+              <th>책임자</th>
+              <th>프로젝트기간</th>
+            </tr>
+          </thead>
+          <tbody>
+		    <c:forEach items="${list}" var="list">
+		  	  <tr>
+		  	    <td><input type="radio" name="selBtn" class="selBtn"></td>
+		  	    <td><c:out value="${list.prj_name}" /></td>
+		  	    <td><c:out value="${list.pm_name}" /></td>
+		  	    <td><fmt:formatDate value="${list.prj_start}" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${list.prj_end}" pattern="yyyy-MM-dd"/></td>
+		  	  </tr>
+		    </c:forEach>
         </tbody>
       </table>
       <div id="btnArea">

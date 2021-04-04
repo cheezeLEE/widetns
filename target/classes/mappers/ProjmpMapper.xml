@@ -5,37 +5,42 @@
 	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
-	<mapper namespace="ProjmpMapper">
-			
-	<!-- 사원 데이터 조회 -->
-	<select id="selectEmp" resultType="com.widetns.projmp.domain.EmployeeVO">
-		SELECT * FROM employee WHERE kor_name = #{kor_name}
-	</select>
+	<mapper namespace="com.widetns.projmp.dao.ProjmpDAO">
 	
 	<!-- 프로젝트 목록 조회 -->
-	<select id="projList" resultType="com.widetns.projmp.domain.TestVO">
+	<select id="projList" resultType="hashmap">
 		SELECT pb.prj_name, pb.pm_name, pb.prj_start, pb.prj_end 
 		FROM project_mapping pm 
 			JOIN project_basic pb ON pb.prj_num = pm.prj_num
 			JOIN employee e ON pm.emp_num = e.emp_num
-		WHERE pb.deleted_yn = 'n' 
-			AND prj_name LIKE '%'||#{prj_name}||'%' 
-			AND kor_name LIKE '%'||#{kor_name}||'%'
-			AND IFNULL(#{prj_start} ,prj_start=#{prj_start}, true) 
-			AND IFNULL(#{prj_end} ,prj_end=#{prj_end}, true) 
+		WHERE pb.deleted_yn = 'n'
 		GROUP BY pb.prj_name;
 	</select>
+
+	<!-- 사원 목록 조회 -->
+	<select id="empList" resultType="hashmap">
+		SELECT * FROM employee
+	</select>
 	
-<!-- 	<resultMap type="ProjectMappingVO" id="searchPrj">
-		<result column="prj_name" property="prjName" />
-		<result column="pm_name" property="pmName" />
-		<result column="prj_start" property="prjStart" />
-		<result column="prj_end" property="prjEnd" />		
-	</resultMap>
+	<!-- 사원 정보 상세보기 페이지 -->
+	<select id="empDetail" resultType="hashmap">
+		SELECT * FROM employee WHERE emp_num = 1
+	</select>
 	
-	<select id="searchProj" resultType="com.widetns.projmp.domain.ProjectMappingVO">
-		SELECT e.emp_name, pb.prj_name, pb.pm_name, pb.prj_start, pb.prn_end 
-		FROM project_basic pb, project_mapping pm, employee e
-		WHERE pb.prj_num = pm.prj_num AND e.emp_num = pm.emp_num AND pb.prj_name LIKE '%'||#{prj_name}||'%'
-	</select> -->
+	<!-- 사원 정보 수정 -->
+	<update id="empUpdate" parameterType="hashmap">
+		UPDATE employee SET 
+			addr1 = #{addr1}, addr2 = #{addr2}, addr3 = #{addr3}, pos = #{pos}, dept = #{dept},
+			career = #{career}, emp_level = #{emp_level}, cert = #{cert}
+		WHERE emp_num = 1
+	</update>
+	
+	<insert id="insertImg" parameterType="hashmap">
+		INSERT INTO emp_img(uuid, uploadpath, filename, emp_num)
+		VALUES(#{uuid}, #{uploadPath}, #{fileName}, #{emp_num})
+	</insert>
+	
+	<select id="findImg" resultType="hashmap">
+		SELECT * FROM emp_img WHERE empNo = #{empNo}
+	</select>
 </mapper>
