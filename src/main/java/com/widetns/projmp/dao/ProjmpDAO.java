@@ -37,11 +37,6 @@ public interface ProjmpDAO {
 	//사원정보 수정
 	public void empUpdate(HashMap<String, Object> map);
 	
-	//사원 사진 수정
-	public void insertImg(HashMap<String, Object> img);
-	
-	//사번으로 사원 사진 찾기
-//	public List<HashMap<String, Object>> findImg(int empNo);
-	public HashMap<String, Object> findImg(int empNo);
-	
+	//사원별 사용할 수 있는 기술목록
+	public List<HashMap<String, Object>> empTech(int emp_num);
 }

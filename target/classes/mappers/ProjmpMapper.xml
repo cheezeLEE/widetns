@@ -31,16 +31,12 @@
 	<update id="empUpdate" parameterType="hashmap">
 		UPDATE employee SET 
 			addr1 = #{addr1}, addr2 = #{addr2}, addr3 = #{addr3}, pos = #{pos}, dept = #{dept},
-			career = #{career}, emp_level = #{emp_level}, cert = #{cert}
+			career = #{career}, emp_level = #{emp_level}, cert = #{cert}, file_name = #{file_name}
 		WHERE emp_num = 1
 	</update>
 	
-	<insert id="insertImg" parameterType="hashmap">
-		INSERT INTO emp_img(uuid, uploadpath, filename, emp_num)
-		VALUES(#{uuid}, #{uploadPath}, #{fileName}, #{emp_num})
-	</insert>
-	
-	<select id="findImg" resultType="hashmap">
-		SELECT * FROM emp_img WHERE empNo = #{empNo}
+	<!-- 사용할 수 있는 기술 검색 -->
+	<select id="empTech" resultType="hashmap">
+		SELECT * FROM employee_tech WHERE emp_num = #{emp_num}
 	</select>
 </mapper>

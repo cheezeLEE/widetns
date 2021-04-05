@@ -56,9 +56,7 @@ public class ProjmpController {
 	
 	@RequestMapping(value="/updateEmp", method = RequestMethod.POST)
 	public String updateEmp(@RequestParam HashMap<String, Object> map, MultipartFile uploadFile, RedirectAttributes rttr) {
-		map.put("uuid", img.get("uuid"));
-		map.put("fileName", img.get("fileName"));
-		map.put("uploadPath", img.get("uploadPath"));
+		map.put("file_name", img.get("file_name"));
 		service.empUpdate(map);
 
 		return "redirect:/";
@@ -82,23 +80,16 @@ public class ProjmpController {
 			String uploadFileName = multipartFile.getOriginalFilename();
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
 			
-			img.put("fileName", uploadFileName);
-			
 			//중복 방지를 위한 uuid
 			UUID uuid = UUID.randomUUID();
 			uploadFileName = uuid.toString()+"_"+uploadFileName;
+
+			img.put("file_name", uploadFileName);
 			
 			try {
 				File saveFile = new File(uploadPath, uploadFileName);
 				multipartFile.transferTo(saveFile);
 				
-				img.put("uuid", uuid.toString());
-				img.put("uploadPath", uploadPath);
-				
-				// 이미지 파일인지 체크
-				if(checkImageType(saveFile)) {
-					img.put("image", true);
-				}
 				list.add(img);
 			} catch(Exception e) {
 				log.error(e.getMessage());
@@ -106,17 +97,7 @@ public class ProjmpController {
 		}
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
-	
-	private boolean checkImageType(File file) {
-		try {
-			String contentType = Files.probeContentType(file.toPath());
-			return contentType.startsWith("image");
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-	
+		
 	// 사원 목록보기
 	@RequestMapping(value = "/searchEmp", method = RequestMethod.GET)
 	public String searchEmp(Model model) {

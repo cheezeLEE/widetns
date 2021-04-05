@@ -80,7 +80,7 @@
       <form role='form' action="/updateEmp" method="POST" enctype="multipart/form-data">
  	      <div class="col-sm-3">
 	      	<div class="col-sm-12">
-		      <img id="empImg" width="150px" src="/resources/img/${empDetail.photo }" alt="${empDetail.photo }">
+		      <img id="empImg" width="150px" src="/resources/img/${empDetail.file_name }">
 	      	  <input type="file" id="img" name="file" accept="image/*" onchange="readURL(this);" />
 	      	</div>
 <!-- 	        <button class="btn btn-sm btn-primary">변경</button> -->
@@ -368,7 +368,7 @@
       });
       
       var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
-		var maxSize = 5242880;
+	  var maxSize = 5242880;
 		
 		function checkExtension(fileName, fileSize){
 			if(fileSize >= maxSize){
@@ -384,7 +384,7 @@
 		}
 	
 		
-		$("#regImg").on("click",function(e){
+		$("input[type='file']").on("change",function(e){
 			var formData = new FormData();
 			var inputFile = $("input[name='file']");
 			var files = inputFile[0].files;
