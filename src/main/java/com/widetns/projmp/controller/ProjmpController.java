@@ -1,8 +1,6 @@
 package com.widetns.projmp.controller;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +49,8 @@ public class ProjmpController {
 	@RequestMapping(value = "/updateEmp", method = RequestMethod.GET)
 	public String updateEmp(Model model) {
 		model.addAttribute("empDetail", service.empDetail());
+		model.addAttribute("empTech", service.empTech());
+		model.addAttribute("empPrj", service.empPrj());
 		return "/widetns/projmp/updateEmp";
 	}
 	
@@ -72,10 +72,6 @@ public class ProjmpController {
 		for(MultipartFile multipartFile : uploadFile) {
 			
 			img = new HashMap<>();
-			
-			log.info("------------------------");
-			log.info("Upload File Name: " + multipartFile.getOriginalFilename());
-			log.info("Upload File Size: " + multipartFile.getSize());
 
 			String uploadFileName = multipartFile.getOriginalFilename();
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);

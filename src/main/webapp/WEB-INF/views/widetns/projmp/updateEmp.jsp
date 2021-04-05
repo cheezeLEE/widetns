@@ -81,7 +81,11 @@
  	      <div class="col-sm-3">
 	      	<div class="col-sm-12">
 		      <img id="empImg" width="150px" src="/resources/img/${empDetail.file_name }">
-	      	  <input type="file" id="img" name="file" accept="image/*" onchange="readURL(this);" />
+		    </div>
+   	      	<div class="col-sm-12">
+		      <label class="btn btn-primary btn-file btn-sm">
+			    파일추가 <input type="file" id="img" name="file" accept="image/*" onchange="readURL(this);" style="display:none;"/>
+			  </label>	      	  
 	      	</div>
 <!-- 	        <button class="btn btn-sm btn-primary">변경</button> -->
 	      </div>
@@ -121,7 +125,7 @@
 	            </tr>
 	            <tr>
 	              <td>우편번호</td>
-	              <td><input type="text" name="addr1" id="addr1" value='<c:out value="${empDetail.addr1 }"/>' required><button class="btn btn-sm btn-primary">검색</button></td>
+	              <td><input type="text" name="addr1" id="addr1" value='<c:out value="${empDetail.addr1 }"/>' required readonly><button class="btn btn-sm btn-primary">검색</button></td>
 	              <td>등급</td>
 	              <td>
 	                <select name="emp_level" id="level">
@@ -134,7 +138,7 @@
 	            </tr>
 	            <tr>
 	              <td>도로명주소</td>
-	              <td><input type="text" name="addr2" id="addr2" value='<c:out value="${empDetail.addr2 }"/>' required></td>
+	              <td><input type="text" name="addr2" id="addr2" value='<c:out value="${empDetail.addr2 }"/>' required readonly></td>
 	              <td>입사일</td>
 	              <td><input type="text" name="join_date" value='<fmt:formatDate value="${empDetail.join_date }" pattern="yyyy-MM-dd"/>' readonly></td>
 	            </tr>
@@ -156,24 +160,13 @@
 	            </tr>
 	          </thead>
 	          <tbody id="tbl_body">
-	            <tr>
-	              <td><input type="checkbox" class="selBtn" name="chkBtn"></td>
-	              <td class="techList">
-	                JAVA
-	              </td>
-	              <td>
-	                상
-	              </td>
-	            </tr>
-	            <tr>
-	              <td><input type="checkbox" class="selBtn" name="chkBtn"></td>
-	              <td class="techList">
-	                C
-	              </td>
-	              <td>
-	                중
-	              </td>
-	            </tr>
+				<c:forEach items="${empTech}" var="empTech">
+		          <tr>
+		            <td><input type="checkbox" class="selBtn" name="chkBtn"></td>
+		            <td class="techList"><c:out value="${empTech.tech_code }"/></td>
+		            <td><c:out value="${empTech.tech_level }"/></td>
+		          </tr>
+		        </c:forEach>
 	          </tbody>
 	        </table>
 	        <br>
@@ -188,8 +181,8 @@
 	          </tbody>
 	        </table>
 	        <div class="btnArea">
-	          <button class="btn btn-sm btn-primary" id="addBtn">추가</button>
-	          <button class="btn btn-sm btn-danger" id="delBtn">삭제</button>
+	          <button type="button" class="btn btn-sm btn-primary" id="addBtn">추가</button>
+	          <button type="button" class="btn btn-sm btn-danger" id="delBtn">삭제</button>
 	        </div>
 	        <h4>참여 프로젝트</h4>
 	        <table class="prj">
@@ -203,20 +196,15 @@
 	            </tr>
 	          </thead>
 	          <tbody>
-	            <tr>
-	              <td>1</td>
-	              <td>프로젝트1</td>
-	              <td>홍길동</td>
-	              <td>김가가</td>
-	              <td>2021.2.20 ~ 2021.5.31</td>
-	            </tr>
-	            <tr>
-	              <td>2</td>
-	              <td>프로젝트2</td>
-	              <td>홍길동</td>
-	              <td>이나나</td>
-	              <td>2020.4.30 ~ 2020.7.25</td>
-	            </tr>
+	            <c:forEach items="${empPrj }" var="empPrj">
+	              <tr>
+	                <td><c:out value="${empPrj.prj_num }"/></td>
+	                <td><c:out value="${empPrj.prj_name }"/></td>
+	                <td><c:out value="${empPrj.pm_name }"/></td>
+	                <td><c:out value="${empPrj.manager }"/></td>
+	                <td><fmt:formatDate value="${empPrj.prj_start }" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${empPrj.prj_end }" pattern="yyyy-MM-dd"/></td>
+	              </tr>
+	            </c:forEach>
 	          </tbody>
 	        </table>
 	        <div class="btnArea">
@@ -241,6 +229,7 @@
       });
     	
       // 사용 가능 기술 목록
+      /* DB에 접근해서 목록 가져오기... */
       var allTechList = ['JAVA', 'C', 'ORACLE', 'PYTHON', 'LINUX'];
 
       // 사용 가능 기술 목록에서 이미 저장되어 있는 기술 삭제
@@ -300,8 +289,10 @@
         // selectbox가 공백이면 alert를 실행하고, 선택이 되었으면 선택된 값을 테이블에 넣어줌
         if (selectedTech === "") {
           alert('기술명을 선택해주세요');
+          return false;
         } else if (rank === "") {
           alert('등급을 선택해주세요');
+          return false;
         } else {
           // 위에서 했던 변수작업을 적용해 추가를 누르면 이전에 선택했던 값이 selectbox에 나오지 않게함
           $(".tbl_body2").html(

@@ -38,5 +38,12 @@ public interface ProjmpDAO {
 	public void empUpdate(HashMap<String, Object> map);
 	
 	//사원별 사용할 수 있는 기술목록
-	public List<HashMap<String, Object>> empTech(int emp_num);
+	public List<HashMap<String, Object>> empTech();
+	
+	//해당 사원의 기술목록 전부삭제
+	
+	//새로 insert
+	
+	//사원별 참여 프로젝트 목록
+	public List<HashMap<String, Object>> empPrj();
 }

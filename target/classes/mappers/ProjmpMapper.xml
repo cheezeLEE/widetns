@@ -13,7 +13,7 @@
 		FROM project_mapping pm 
 			JOIN project_basic pb ON pb.prj_num = pm.prj_num
 			JOIN employee e ON pm.emp_num = e.emp_num
-		WHERE pb.deleted_yn = 'n'
+		WHERE pb.pb_deleted_yn = 'n'
 		GROUP BY pb.prj_name;
 	</select>
 
@@ -37,6 +37,11 @@
 	
 	<!-- 사용할 수 있는 기술 검색 -->
 	<select id="empTech" resultType="hashmap">
-		SELECT * FROM employee_tech WHERE emp_num = #{emp_num}
+		SELECT * FROM employee_tech WHERE emp_num = 1 AND et_deleted_yn = 'n'
+	</select>
+	
+	<!-- 사원별 참여 프로젝트 목록 -->
+	<select id="empPrj" resultType="hashmap">
+		SELECT * FROM project_basic pb JOIN project_mapping pm ON pb.prj_num = pm.prj_num WHERE pb.pb_deleted_yn = 'n' AND pm.emp_num = 1
 	</select>
 </mapper>

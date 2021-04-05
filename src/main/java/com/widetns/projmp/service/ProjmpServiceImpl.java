@@ -35,7 +35,12 @@ public class ProjmpServiceImpl implements ProjmpService{
 	}
 
 	@Override
-	public List<HashMap<String, Object>> empTech(int emp_num) {
-		return dao.empTech(emp_num);
+	public List<HashMap<String, Object>> empTech() {
+		return dao.empTech();
+	}
+
+	@Override
+	public List<HashMap<String, Object>> empPrj() {
+		return dao.empPrj();
 	}
 }
