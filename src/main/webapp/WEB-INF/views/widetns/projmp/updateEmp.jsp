@@ -10,6 +10,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>사원정보 수정</title>
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
   <style>
@@ -81,13 +83,13 @@
  	      <div class="col-sm-3">
 	      	<div class="col-sm-12">
 		      <img id="empImg" width="150px" src="/resources/img/${empDetail.file_name }">
+		      <input type="hidden" name="file_name" value="${empDetail.file_name }">
 		    </div>
    	      	<div class="col-sm-12">
 		      <label class="btn btn-primary btn-file btn-sm">
 			    파일추가 <input type="file" id="img" name="file" accept="image/*" onchange="readURL(this);" style="display:none;"/>
 			  </label>	      	  
 	      	</div>
-<!-- 	        <button class="btn btn-sm btn-primary">변경</button> -->
 	      </div>
 	      <div class="col-sm-9">
 	        <table>
@@ -220,6 +222,9 @@
 <script>
     $(document).ready(function () {
 
+	  $('.techList').first().closest('tr').remove();
+	  
+	  
       $("#regBtn").on("click",function(e){
     	  location.href="/"; 
       });
@@ -230,8 +235,11 @@
     	
       // 사용 가능 기술 목록
       /* DB에 접근해서 목록 가져오기... */
-      var allTechList = ['JAVA', 'C', 'ORACLE', 'PYTHON', 'LINUX'];
-
+      var allTechList = new Array();
+      <c:forEach items="${allTech}" var="allTech">
+	      allTechList.push("${allTech.code_name}")
+      </c:forEach>
+	
       // 사용 가능 기술 목록에서 이미 저장되어 있는 기술 삭제
       var rows = $("#tbl_body tr").length;
       for (var i = 1; i <= rows; i++) {
@@ -268,8 +276,32 @@
       // 추가 버튼을 누르면 한 줄이 추가됨
       $("#addBtn").on("click", function () {
 
+	  // 추가시 데이터를 json으로 전송해 db에 접근시켜 insert함
+        // 선택한 데이터의 값을 받아옴
+    	var selectedTech = $("#tech option:selected").val();
+        var selectedRank = $("#rank option:selected").val();
+    	
+        // 선택값을 객체에 저장
+        var addTech = {};
+        addTech.tech_code = selectedTech;
+        addTech.tech_level = selectedRank;
+        
+        $.ajax({
+        	url: 'addTech',
+			type: "POST",
+			data: JSON.stringify(addTech),
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function(data){
+				console.log("addTech 성공: " + data);
+			},
+			error:function(request,status,error){
+		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		    }
+        });
+    	
+        
         // 선택한 기술을 기술목록에서 삭제함
-        var selectedTech = $("#tech option:selected").val();
         if (allTechList.indexOf(selectedTech) > -1) {
           if (typeof selectedTech != "undefined" && selectedTech != "") {
             allTechList.splice(allTechList.indexOf(selectedTech), 1);
@@ -327,14 +359,21 @@
           );
         }
       });
-
+      
       //삭제 버튼을 누르면 선택한 행이 삭제됨
       $("#delBtn").on("click", function () {
         var checkTechs = $("[name='chkBtn']:checked");
+        var delTechs = new Array();
+        if(checkTechs.val() == undefined){
+        	alert("삭제할 기술을 선택하세요");
+        	return false;
+        }
         for (var i = checkTechs.length - 1; i > -1; i--) {
           // 삭제되는 행의 기술명을 가져와서 allTechList에 넣음
-          removeTech = checkTechs.eq(i).closest('tr').text().replace("", " ").replace(/^\s*/, "").split(" ")[0];
+          var removeTech = checkTechs.eq(i).closest('tr').text().replace(/^\s*/, "").split(" ")[0];
+		  removeTech = removeTech.trim();
           allTechList.push(removeTech);
+          delTechs.push(removeTech);
           // 삭제된 기술명을 selectbox를 추가 
           opt = opt + '<option value="' + removeTech + '">' + removeTech + '</option>';
           $(".tbl_body2").html(
@@ -356,6 +395,23 @@
           );
           checkTechs.eq(i).closest('tr').remove(); //삭제
         }
+        
+        $.ajax({
+        	url: 'delTech',
+        	type: 'POST',
+        	data: JSON.stringify(delTechs),
+        	dataType: 'json',
+        	contentType: 'application/json; charset=UTF-8',
+        	success: function(data){
+        		console.log("성공");
+        	},
+        	error:function(request,status,error){
+		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		    },
+		    complete: function(){
+		    	console.log("전송 성공")
+		    }
+        });
       });
       
       var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");

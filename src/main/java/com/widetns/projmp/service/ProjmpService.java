@@ -14,6 +14,12 @@ public interface ProjmpService {
 	public void empUpdate(HashMap<String, Object> map);
 	// 사원별 사용할 수 있는 기술
 	public List<HashMap<String, Object>> empTech();
+	// 공통코드 내 모든 기술목록
+	public List<HashMap<String, Object>> allTech();
+	// 해당 사원의 기술 추가
+	public void addTech(HashMap<String, Object> map);
+	// 해당 사원의 기술 삭제
+	public void delTech(String tech);
 	// 사원별 참여 프로젝트 목록
 	public List<HashMap<String, Object>> empPrj();
 }

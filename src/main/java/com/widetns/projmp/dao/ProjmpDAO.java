@@ -40,10 +40,18 @@ public interface ProjmpDAO {
 	//사원별 사용할 수 있는 기술목록
 	public List<HashMap<String, Object>> empTech();
 	
-	//해당 사원의 기술목록 전부삭제
+	//공통코드에 포함된 모든 기술목록
+	public List<HashMap<String, Object>> allTech();
 	
-	//새로 insert
+	//해당 사원의 기술 추가
+	public void addTech(HashMap<String, Object> map);
+	
+	//해당 사원의 기술 삭제
+	public void delTech(String tech);
 	
 	//사원별 참여 프로젝트 목록
 	public List<HashMap<String, Object>> empPrj();
+	
+	//공통코드의 모든 기술목록 선택
+	public List<HashMap<String, Object>> comTech();
 }
