@@ -66,12 +66,12 @@ public class ProjmpController {
 			map.put("file_name", map.get("file_name"));
 		}
 		service.empUpdate(map);
-		Iterator<String> keys = map.keySet().iterator();
-		while(keys.hasNext()) {
-			String key = keys.next();
-			Object value = map.get(key);
-			log.info(key + ":" + value);
-		}
+//		Iterator<String> keys = map.keySet().iterator();
+//		while(keys.hasNext()) {
+//			String key = keys.next();
+//			Object value = map.get(key);
+//			log.info(key + ":" + value);
+//		}
 		return "redirect:/";
 	}
 	
@@ -79,7 +79,7 @@ public class ProjmpController {
 	@RequestMapping(value="/addTech", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<HashMap<String, Object>> addTech(@RequestBody HashMap<String, Object> map) {
-		log.info("addTech() : "+map.get("tech_code")+","+map.get("tech_level"));
+//		log.info("addTech() : "+map.get("tech_code")+","+map.get("tech_level"));
 		service.addTech(map);
 		
 		return new ResponseEntity<>(map,HttpStatus.OK);
